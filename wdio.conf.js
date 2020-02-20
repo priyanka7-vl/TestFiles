@@ -20,7 +20,7 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './test/**/**.js'
+        './test/contactUs-CustomCommands.test.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -170,6 +170,24 @@ exports.config = {
                  url:this.getUrl(),
                  title:this.getTitle()
              }
+         })
+
+         browser.addCommand("waitAndClick",function(selector) {
+           try {
+                $(selector).waitForExist();
+                $(selector).click();
+           } catch(Error) {
+               throw new Error("could not click on selector"+ $(selector));
+           }
+        })
+
+        browser.addCommand("waitAndSendkeys",function(selector,keys) {
+            try {
+                 $(selector).waitForExist();
+                 $(selector).setValue(keys);
+            } catch(Error) {
+                throw new Error("could not send keys"+ $(keys)+",using selector: "+$(selector));
+            }
          })
      },
     /**
